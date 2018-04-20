@@ -49,7 +49,7 @@ public class IssueIT {
 		//then
 		String text = new String(Files.readAllBytes(new File("target/log.log").toPath()));
 		List<String> traceIds = Arrays.stream(text.split("\n"))
-				.filter(s -> s.contains("X-B3-ParentSpanId")).map(s -> s.split(",")[1])
+				.filter(s -> s.contains("X-B3-ParentSpanId")).map(s -> s.split(":")[1].trim())
 				.collect(Collectors.toList());
 		BDDAssertions
 				// 3 calls should have X-B3-ParentSpanId
