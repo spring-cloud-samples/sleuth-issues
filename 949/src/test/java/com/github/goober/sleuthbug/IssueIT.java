@@ -37,7 +37,6 @@ public class IssueIT {
 	public void should_propagate_trace_id() throws IOException {
 		//given
 		Span span = tracer.nextSpan().name("foo").start();
-		String traceIdString = span.context().traceIdString();
 		try (Tracer.SpanInScope ws = tracer.withSpanInScope(span)) {
 			//when
 			restTemplate
@@ -52,9 +51,13 @@ public class IssueIT {
 				.filter(s -> s.contains("X-B3-ParentSpanId")).map(s -> s.split(":")[1].trim())
 				.collect(Collectors.toList());
 		BDDAssertions
-				// 3 calls should have X-B3-ParentSpanId
-				.then(traceIds).hasSize(4)
-				.containsAll(Collections.singleton(traceIdString));
+				// 4 calls should have X-B3-ParentSpanId
+				.then(traceIds)
+				.hasSize(4);
+		BDDAssertions
+				// they should have the same value
+				.then(traceIds.stream().distinct().collect(Collectors.toList()))
+				.hasSize(1);
 	}
 
 	@Configuration
