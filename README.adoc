@@ -1,0 +1,24 @@
+= Spring Cloud Sleuth Issues
+
+This repository contains issues related to Spring Cloud Sleuth.
+Sometimes an issue is impossible to be replicated in the build
+of Spring Cloud Sleuth, due to classpath issues.
+
+In order for us not to have regressions, we will put those more
+complex issues in this repository and run automated tests.
+
+IMPORTANT: You need to have Docker and Docker Compose installed
+to run these tests
+
+== Running tests
+
+Just execute
+
+```bash
+$ ./scripts/runAcceptanceTests.sh
+```
+
+That way we'll
+
+* setup infrastructure (Kafka etc.)
+* run integration tests of each application

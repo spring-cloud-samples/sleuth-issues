@@ -1,0 +1,69 @@
+package com.github.jntakpe.sleuthkafka;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import brave.Span;
+import brave.Tracer;
+import org.assertj.core.api.BDDAssertions;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = IssueIT.Config.class)
+@ActiveProfiles("test")
+public class IssueIT {
+
+	@Value("${test.server.port:7654}") int port;
+	@Autowired RestTemplate restTemplate;
+	@Autowired Tracer tracer;
+
+	@Test
+	public void should_propagate_trace_id() throws IOException {
+		//given
+		Span span = tracer.nextSpan().name("foo").start();
+		String traceIdString = span.context().traceIdString();
+		try (Tracer.SpanInScope ws = tracer.withSpanInScope(span)) {
+			//when
+			restTemplate
+					.getForObject("http://localhost:" + port + "/kafka/template", String.class);
+			restTemplate
+					.getForObject("http://localhost:" + port + "/kafka/reactor", String.class);
+		} finally {
+			span.finish();
+		}
+
+		//then
+		String text = new String(Files.readAllBytes(new File("target/log.log").toPath()));
+		List<String> traceIds = Arrays.stream(text.split("\n"))
+				.filter(s -> s.contains("[TEST]")).map(s -> s.split(",")[1]).distinct()
+				.collect(Collectors.toList());
+		BDDAssertions
+				.then(traceIds).hasSize(1)
+				.containsOnly(traceIdString);
+	}
+
+	@Configuration
+	@EnableAutoConfiguration
+	static class Config {
+		@Bean
+		RestTemplate restTemplate() {
+			return new RestTemplate();
+		}
+	}
+
+}
