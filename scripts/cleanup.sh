@@ -3,4 +3,4 @@
 ./scripts/stop_infra.sh
 
 # Kill apps
-pkill -f "sleuth-issue"
+pkill -f "sleuth-issue" || echo "Failed to kill any running apps"
