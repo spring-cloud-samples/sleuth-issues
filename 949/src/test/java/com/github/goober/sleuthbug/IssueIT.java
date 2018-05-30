@@ -54,10 +54,12 @@ public class IssueIT {
 				// 4 calls should have X-B3-ParentSpanId
 				.then(traceIds)
 				.hasSize(4);
+		List<String> strings = traceIds.stream().distinct().collect(Collectors.toList());
 		BDDAssertions
 				// they should have the same value
-				.then(traceIds.stream().distinct().collect(Collectors.toList()))
+				.then(strings)
 				.hasSize(1);
+		BDDAssertions.then(strings.get(0)).isNotBlank();
 	}
 
 	@Configuration
