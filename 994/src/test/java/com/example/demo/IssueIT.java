@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import brave.Span;
 import brave.Tracer;
+import brave.sampler.Sampler;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,8 +39,8 @@ public class IssueIT {
 
 	private static final Logger log = LoggerFactory.getLogger(IssueIT.class);
 
-	@Value("${test.server.port:7656}") int port;
-	@Autowired RestTemplate restTemplate;
+	@Value("${test.server.port:7656}")
+	int port;
 	@Autowired Tracer tracer;
 	@Autowired WebClient.Builder webClientBuilder;
 
@@ -98,7 +99,7 @@ public class IssueIT {
 
 	private List<String> traceIdFromString(String prodLog) {
 		return Arrays.stream(prodLog.split("\n"))
-				.filter(s -> s.contains("[TEST_ME]")).map(s -> s.split(":")[1].trim())
+				.filter(s -> s.contains("[TEST_ME]")).map(s -> s.split(",")[1].trim())
 				.collect(Collectors.toList());
 	}
 
@@ -109,9 +110,8 @@ public class IssueIT {
 	@Configuration
 	@EnableAutoConfiguration
 	static class Config {
-		@Bean
-		RestTemplate restTemplate() {
-			return new RestTemplate();
+		@Bean Sampler sampler() {
+			return Sampler.ALWAYS_SAMPLE;
 		}
 	}
 
