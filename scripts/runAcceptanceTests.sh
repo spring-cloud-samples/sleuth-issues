@@ -6,6 +6,6 @@ trap './scripts/cleanup.sh' EXIT
 
 ./scripts/setup_infra.sh
 
-./mvnw clean install -faeU
+./mvnw clean install -fae -U
 
 
