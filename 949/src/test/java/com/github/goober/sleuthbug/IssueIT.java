@@ -57,7 +57,8 @@ public class IssueIT {
 		BDDAssertions
 				// they should have the same value
 				.then(traceIds.stream().distinct().collect(Collectors.toList()))
-				.hasSize(1);
+				.hasSize(1)
+				.isNotEmpty();
 	}
 
 	@Configuration
