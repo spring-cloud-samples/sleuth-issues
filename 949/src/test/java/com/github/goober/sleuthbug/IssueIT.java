@@ -55,10 +55,10 @@ public class IssueIT {
 				.then(traceIds)
 				.hasSize(4);
 		List<String> strings = traceIds.stream().distinct().collect(Collectors.toList());
+		// with Greenwich we expect each call to have a different parent
 		BDDAssertions
-				// they should have the same value
 				.then(strings)
-				.hasSize(1);
+				.hasSize(3);
 		BDDAssertions.then(strings.get(0)).isNotBlank();
 	}
 
