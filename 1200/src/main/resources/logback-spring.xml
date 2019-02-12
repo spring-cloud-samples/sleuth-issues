@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<springProfile name="PROD,json-logging">
+		<springProperty scope="context" name="springAppName" source="spring.application.name"/>
+		<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+			<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+				<providers>
+					<timestamp>
+						<timeZone>UTC</timeZone>
+					</timestamp>
+					<pattern>
+						<pattern>
+							{
+							"severity": "%level",
+							"service": "${springAppName:-}",
+							"caller-ref": "%X{x-caller-ref}",
+							"trace": "%X{X-B3-TraceId:-}",
+							"span": "%X{X-B3-SpanId:-}",
+							"exportable": "%X{X-Span-Export:-}",
+							"pid": "${PID:-}",
+							"thread": "%thread",
+							"class": "%logger{40}",
+							"message": "%message"
+							}
+						</pattern>
+					</pattern>
+					<arguments/>
+					<stackTrace>
+						<throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+							<maxDepthPerThrowable>10</maxDepthPerThrowable>
+							<maxLength>10000</maxLength>
+							<shortenedClassNameLength>20</shortenedClassNameLength>
+							<exclude>sun\.reflect\..*\.invoke.*</exclude>
+							<exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+							<rootCauseFirst>true</rootCauseFirst>
+						</throwableConverter>
+					</stackTrace>
+				</providers>
+				<jsonFactoryDecorator
+					class="net.marcusolk.demo.jms.configuration.LogstashLogbackJsonFactoryDecorator"/>
+			</encoder>
+		</appender>
+
+		<root level="INFO">
+			<appender-ref ref="CONSOLE"/>
+		</root>
+	</springProfile>
+
+	<springProfile name="default,TEST,dev">
+		<include resource="org/springframework/boot/logging/logback/base.xml"/>
+	</springProfile>
+
+</configuration>
