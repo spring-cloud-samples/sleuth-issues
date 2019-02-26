@@ -1,11 +1,9 @@
 package com.github.goober.sleuthbug;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +12,7 @@ import brave.Tracer;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -36,11 +35,11 @@ public class IssueIT {
 	@Test
 	public void should_propagate_trace_id() throws IOException {
 		//given
-		Span span = tracer.nextSpan().name("foo").start();
-		try (Tracer.SpanInScope ws = tracer.withSpanInScope(span)) {
+		Span span = this.tracer.nextSpan().name("foo").start();
+		try (Tracer.SpanInScope ws = this.tracer.withSpanInScope(span)) {
 			//when
-			restTemplate
-					.getForObject("http://localhost:" + port + "/users", String.class);
+			this.restTemplate
+					.getForObject("http://localhost:" + this.port + "/users", String.class);
 		} finally {
 			span.finish();
 		}
@@ -55,10 +54,12 @@ public class IssueIT {
 				.then(traceIds)
 				.hasSize(4);
 		List<String> strings = traceIds.stream().distinct().collect(Collectors.toList());
-		// with Greenwich we expect each call to have a different parent
+		// they should all share a single Parent Span Id cause we're continuing the trace
+		// for Greenwich.RELEASE we had 4 parent span ids, but there were bugs with flat map
+		// for Greenwich.SR1 we have 1 parent span id
 		BDDAssertions
 				.then(strings)
-				.hasSize(3);
+				.hasSize(1);
 		BDDAssertions.then(strings.get(0)).isNotBlank();
 	}
 

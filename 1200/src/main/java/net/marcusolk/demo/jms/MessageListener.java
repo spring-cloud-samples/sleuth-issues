@@ -23,7 +23,7 @@ public class MessageListener {
 		try {
 			log.info("Received request [receiveMessage]");
 
-			final String result = helloProxy.sendHello(message.getText());
+			final String result = this.helloProxy.sendHello(message.getText());
 
 			log.info("Processed request [receiveMessage]: " + result);
 		}

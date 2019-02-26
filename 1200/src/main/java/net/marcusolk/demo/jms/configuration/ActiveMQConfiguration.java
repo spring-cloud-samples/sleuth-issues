@@ -22,9 +22,9 @@ public class ActiveMQConfiguration {
 
 	@Bean
 	protected ActiveMQConnectionFactory connectionFactory() {
-		final ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(connectionUrl);
-		factory.setUserName(user);
-		factory.setPassword(password);
+		final ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(this.connectionUrl);
+		factory.setUserName(this.user);
+		factory.setPassword(this.password);
 		return factory;
 	}
 }

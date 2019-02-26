@@ -35,7 +35,7 @@ public class HelloProxy {
         try {
         	log.info("Sending hello request.");
 
-            return restTemplate.exchange(helloServiceUrl, HttpMethod.POST, entity, String.class).getBody();
+            return this.restTemplate.exchange(this.helloServiceUrl, HttpMethod.POST, entity, String.class).getBody();
         }
 		catch (final Exception e) {
             throw new RuntimeException("Hello reuest failed.", e);

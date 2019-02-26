@@ -58,17 +58,17 @@ public class SleuthKafkaApplication {
 			User user = new User().setUsername("reactor-user").setAge(20);
 			SenderRecord<String, String, Integer> record = SenderRecord
 					.create("some-topic", 0, null, user.getUsername(),
-							objectMapper.writeValueAsString(user),
-							correlationId.incrementAndGet());
+							this.objectMapper.writeValueAsString(user),
+							this.correlationId.incrementAndGet());
 			log.info("[TEST] Sending the response for reactor");
-			return kafkaSender.send(Mono.just(record)).map(i -> user).single();
+			return this.kafkaSender.send(Mono.just(record)).map(i -> user).single();
 		}
 
 		@GetMapping("/template") public User template()
 				throws JsonProcessingException, ExecutionException, InterruptedException {
 			User user = new User().setUsername("template-user").setAge(30);
-			SendResult<String, String> stringStringSendResult = kafkaTemplate
-					.send("some-topic", objectMapper.writeValueAsString(user)).get();
+			SendResult<String, String> stringStringSendResult = this.kafkaTemplate
+					.send("some-topic", this.objectMapper.writeValueAsString(user)).get();
 			log.info("[TEST] Sending the response for template");
 			return user;
 		}

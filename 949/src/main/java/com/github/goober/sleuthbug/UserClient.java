@@ -14,13 +14,13 @@ public class UserClient {
     private WebClient webClient;
 
     Mono<BriefUserResponse> findUsers() {
-        return webClient.get()
+        return this.webClient.get()
                 .uri("/external").retrieve()
                 .bodyToMono(BriefUserResponse.class);
     }
 
     Mono<UserDetails> getUserDetails(String id) {
-        return webClient.get().uri("/external/{id}", id)
+        return this.webClient.get().uri("/external/{id}", id)
                 .retrieve()
                 .bodyToMono(UserDetails.class);
     }

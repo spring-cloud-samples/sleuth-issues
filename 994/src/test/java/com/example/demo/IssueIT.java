@@ -50,28 +50,28 @@ public class IssueIT {
 
 	@Before
 	public void setup() {
-		webclient1 = webClientBuilder.baseUrl("http://localhost:" + port + "/foo").build();
-		webclient2 = webClientBuilder.baseUrl("http://localhost:" + port + "/bar").build();
-		webclient3 = webClientBuilder.baseUrl("http://localhost:" + port + "/baz").build();
+		this.webclient1 = this.webClientBuilder.baseUrl("http://localhost:" + this.port + "/foo").build();
+		this.webclient2 = this.webClientBuilder.baseUrl("http://localhost:" + this.port + "/bar").build();
+		this.webclient3 = this.webClientBuilder.baseUrl("http://localhost:" + this.port + "/baz").build();
 	}
 
 	@Test
 	public void should_propagate_trace_id() throws IOException {
 		//given
-		Span span = tracer.nextSpan().name("foo").start();
-		try (Tracer.SpanInScope ws = tracer.withSpanInScope(span)) {
+		Span span = this.tracer.nextSpan().name("foo").start();
+		try (Tracer.SpanInScope ws = this.tracer.withSpanInScope(span)) {
 			log.info("[TEST_ME] Starting");
 			// when
-			Object res = webclient1.get().retrieve()
+			Object res = this.webclient1.get().retrieve()
 					.bodyToMono(String.class).flatMap(foo -> {
 					log.info("[TEST_ME] received [" + foo + "]");
-					return webclient2.get().retrieve().bodyToMono(String.class).map( bar -> {
+					return this.webclient2.get().retrieve().bodyToMono(String.class).map( bar -> {
 						log.info("[TEST_ME] concatenating [" + foo + " " + bar);
 					return foo + " " + bar;
 				});
 			}).flatMap(fooBar -> {
 				log.info("[TEST_ME] received [" + fooBar + "]");
-				return webclient3.get().retrieve().bodyToMono(String.class).map(baz -> {
+				return this.webclient3.get().retrieve().bodyToMono(String.class).map(baz -> {
 					log.info("[TEST_ME] concatenating [" + fooBar +"] [" + baz + "]");
 					return fooBar + " " + baz;
 				});

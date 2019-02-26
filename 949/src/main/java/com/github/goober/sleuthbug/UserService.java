@@ -12,12 +12,12 @@ public class UserService {
     private UserClient userClient;
 
     public Flux<User> findUsers() {
-        return userClient.findUsers()
+        return this.userClient.findUsers()
                 .flatMapIterable(BriefUserResponse::getUserIds)
                 .map(id -> User.builder().id(id).build());
     }
 
     public Mono<UserDetails> getUserDetails(String userId) {
-        return userClient.getUserDetails(userId);
+        return this.userClient.getUserDetails(userId);
     }
 }

@@ -10,7 +10,7 @@ public class User {
 	private int age;
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public User setUsername(String username) {
@@ -19,7 +19,7 @@ public class User {
 	}
 
 	public int getAge() {
-		return age;
+		return this.age;
 	}
 
 	public User setAge(int age) {

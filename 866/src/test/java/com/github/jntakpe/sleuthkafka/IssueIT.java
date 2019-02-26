@@ -35,14 +35,14 @@ public class IssueIT {
 	@Test
 	public void should_propagate_trace_id() throws IOException {
 		//given
-		Span span = tracer.nextSpan().name("foo").start();
+		Span span = this.tracer.nextSpan().name("foo").start();
 		String traceIdString = span.context().traceIdString();
-		try (Tracer.SpanInScope ws = tracer.withSpanInScope(span)) {
+		try (Tracer.SpanInScope ws = this.tracer.withSpanInScope(span)) {
 			//when
-			restTemplate
-					.getForObject("http://localhost:" + port + "/kafka/template", String.class);
-			restTemplate
-					.getForObject("http://localhost:" + port + "/kafka/reactor", String.class);
+			this.restTemplate
+					.getForObject("http://localhost:" + this.port + "/kafka/template", String.class);
+			this.restTemplate
+					.getForObject("http://localhost:" + this.port + "/kafka/reactor", String.class);
 		} finally {
 			span.finish();
 		}
