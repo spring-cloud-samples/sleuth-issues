@@ -82,7 +82,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- Sends trace data to zipkin over http (http://zipkin:9411/api/v2/spans) -->
+		<!-- Sends trace data to zipkin over http (https://zipkin:9411/api/v2/spans) -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
