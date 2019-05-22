@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +28,7 @@ import org.springframework.web.client.RestTemplate;
 @ActiveProfiles("test")
 public class IssueIT {
 
-	//@Value("${test.server.port:7655}")
-	int port = 7655;
+	@Value("${test.server.port:7655}")
 	@Autowired RestTemplate restTemplate;
 	@Autowired Tracer tracer;
 
