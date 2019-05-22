@@ -1,18 +1,20 @@
 package com.github.goober.sleuthbug;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import reactor.core.publisher.Mono;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
-
-import java.util.Arrays;
 
 @RestController
-@Slf4j
 public class StubbedExternalClientController {
 
-    @GetMapping(value = "/external", produces = "application/json")
+	private static final Logger log = org.slf4j.LoggerFactory.getLogger(StubbedExternalClientController.class);
+
+	@GetMapping(value = "/external", produces = "application/json")
     public Mono<BriefUserResponse> getBriefUsers() {
         BriefUserResponse response = BriefUserResponse.builder().userIds(Arrays.asList("1","2","3")).build();
         log.info("{}",response);
