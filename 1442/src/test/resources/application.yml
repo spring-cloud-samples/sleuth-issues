@@ -1,0 +1,3 @@
+#With false error not occurs
+spring:
+  sleuth.web.client.enabled: true
