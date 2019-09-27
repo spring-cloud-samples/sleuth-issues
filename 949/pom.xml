@@ -71,6 +71,7 @@
 						</goals>
 						<phase>process-resources</phase>
 						<configuration>
+							<randomPort>true</randomPort>
 							<portNames>
 								<portName>tomcat.http.port</portName>
 							</portNames>
