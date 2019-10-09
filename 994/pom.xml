@@ -62,7 +62,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<executions>
@@ -93,7 +93,7 @@
 						<configuration>
 							<workingDirectory>${project.build.directory}</workingDirectory>
 							<arguments>
-								<argument>--server.port=${tomcat.http.port}</argument>
+								<argument>\-\-server.port=${tomcat.http.port}</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -124,7 +124,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 
