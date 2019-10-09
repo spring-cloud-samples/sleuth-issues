@@ -39,7 +39,7 @@ public class IssueIT {
 
 	private static final Logger log = LoggerFactory.getLogger(IssueIT.class);
 
-	@Value("${test.server.port:7656}")
+	@Value("${test.server.port:23456}")
 	int port;
 	@Autowired Tracer tracer;
 	@Autowired WebClient.Builder webClientBuilder;
