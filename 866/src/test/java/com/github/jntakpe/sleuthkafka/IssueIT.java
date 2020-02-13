@@ -48,7 +48,7 @@ public class IssueIT {
 		}
 
 		//then
-		String text = new String(Files.readAllBytes(new File("target/log.log").toPath()));
+		String text = new String(Files.readAllBytes(new File("target/log/spring.log").toPath()));
 		List<String> traceIds = Arrays.stream(text.split("\n"))
 				.filter(s -> s.contains("[TEST]")).map(s -> s.split(",")[1]).distinct()
 				.collect(Collectors.toList());

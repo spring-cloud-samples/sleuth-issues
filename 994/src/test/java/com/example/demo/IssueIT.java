@@ -84,8 +84,8 @@ public class IssueIT {
 		}
 
 		//then
-		String prodLog = fileAsString("target/log.log");
-		String testLog = fileAsString("target/test_log.log");
+		String prodLog = fileAsString("target/log/spring.log");
+		String testLog = fileAsString("target/test_log/spring.log");
 		List<String> prodTraceIds = traceIdFromString(prodLog);
 		List<String> testTraceIds = traceIdFromString(testLog);
 		List<String> combinedTraceIds = new ArrayList<>(prodTraceIds);
