@@ -47,7 +47,7 @@ public class IssueIT {
 		//then
 		String text = new String(Files.readAllBytes(new File("target/log/spring.log").toPath()));
 		List<String> callIds = Arrays.stream(text.split("\n"))
-				.filter(s -> s.contains("Handled send of NoopSpan(")).map(s -> s.split("/")[1].trim().substring(0, 16))
+				.filter(s -> s.contains("NoopSpan(")).map(s -> s.split("/")[1].trim().substring(0, 16))
 				.collect(Collectors.toList());
 		System.out.println("Found the following call ids " + callIds);
 		List<String> parentSpanIds = Arrays.stream(text.split("\n"))
