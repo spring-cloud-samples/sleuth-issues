@@ -10,13 +10,13 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>1516</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-BUILD-SNAPSHOT</version>
 	<name>sleuth-issue-1516</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<spring-cloud.version>Ilford.BUILD-SNAPSHOT</spring-cloud.version>
+		<spring-cloud.version>2020.0.0-BUILD-SNAPSHOT</spring-cloud.version>
 	</properties>
 
 	<dependencyManagement>
