@@ -8,16 +8,16 @@ import java.util.stream.Collectors;
 import org.assertj.core.api.BDDAssertions;
 import org.assertj.core.api.ListAssert;
 import org.junit.jupiter.api.Test;
-import zipkin2.Span;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.sleuth.util.ArrayListSpanReporter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
+
+import brave.handler.MutableSpan;
 
 @SpringBootTest
 class DemoApplicationTests {
@@ -35,7 +35,7 @@ class DemoApplicationTests {
 			String response = new RestTemplate().getForObject("http://localhost:" + service1Port + "/call", String.class);
 			BDDAssertions.then(response).isEqualTo("123");
 
-			List<Span> spans = allReportedSpans(service2, service1);
+			List<MutableSpan> spans = allReportedSpans(service2, service1);
 			thenHasOnlyOneTraceId(spans);
 			String firstSpanIdInController = firstSpan(service1).context().spanIdString();
 			thenAllPostWebClientSpansAreEqualToFirstSpanInTheController(service1, firstSpanIdInController);
@@ -56,21 +56,21 @@ class DemoApplicationTests {
 		return BDDAssertions.then(postWebClientSpans(service1).stream().map(span -> span.context().spanIdString()).distinct().collect(Collectors.toList())).containsExactly(firstSpanIdInController);
 	}
 
-	private List<Span> allReportedSpans(ConfigurableApplicationContext service2, ConfigurableApplicationContext service1) {
-		ArrayListSpanReporter service1Reporter = reporter(service1);
-		ArrayListSpanReporter service2Reporter = reporter(service2);
-		List<Span> spans = new ArrayList<>(service1Reporter.getSpans());
-		spans.addAll(service2Reporter.getSpans());
+	private List<MutableSpan> allReportedSpans(ConfigurableApplicationContext service2, ConfigurableApplicationContext service1) {
+		TestSpanHandler service1Reporter = handler(service1);
+		TestSpanHandler service2Reporter = handler(service2);
+		List<MutableSpan> spans = new ArrayList<>(service1Reporter.spans());
+		spans.addAll(service2Reporter.spans());
 		return spans;
 	}
 
-	private void thenHasOnlyOneTraceId(List<Span> spans) {
-		BDDAssertions.then(spans.stream().map(Span::traceId).collect(Collectors.toSet())).hasSize(1);
+	private void thenHasOnlyOneTraceId(List<MutableSpan> spans) {
+		BDDAssertions.then(spans.stream().map(MutableSpan::traceId).collect(Collectors.toSet())).hasSize(1);
 	}
 
-	private void thenAllWebClientSpansHaveSameParentId(List<Span> spans, String firstSpanIdInController) {
+	private void thenAllWebClientSpansHaveSameParentId(List<MutableSpan> spans, String firstSpanIdInController) {
 		BDDAssertions.then(spans.stream().filter(span -> "CLIENT".equals(span.kind().name()))
-				.map(Span::parentId).collect(Collectors.toSet())).hasSize(1).containsExactly(firstSpanIdInController);
+				.map(MutableSpan::parentId).collect(Collectors.toSet())).hasSize(1).containsExactly(firstSpanIdInController);
 	}
 
 	private ConfigurableApplicationContext service(String name) {
@@ -94,8 +94,8 @@ class DemoApplicationTests {
 				Integer.class);
 	}
 
-	ArrayListSpanReporter reporter(ApplicationContext context) {
-		return context.getBean(ArrayListSpanReporter.class);
+	TestSpanHandler handler(ApplicationContext context) {
+		return context.getBean(TestSpanHandler.class);
 	}
 
 	brave.Span firstSpan(ApplicationContext context) {

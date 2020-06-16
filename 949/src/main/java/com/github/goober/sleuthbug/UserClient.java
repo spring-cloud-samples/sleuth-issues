@@ -1,6 +1,5 @@
 package com.github.goober.sleuthbug;
 
-import org.slf4j.Logger;
 import reactor.core.publisher.Mono;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class UserClient {
 
-	private static final Logger log = org.slf4j.LoggerFactory.getLogger(UserClient.class);
 	@Autowired
     private WebClient webClient;
 

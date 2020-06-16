@@ -18,10 +18,10 @@ $ curl http://localhost:8000/users
 Watch the log outout from the bootRun command
 
 ### Expected Behaviour
-The header `X-B3-ParentSpanId` should exist on all requests and have the same value.
+The header `parentSpanId` should exist on all requests and have the same value.
 
 ### Actual Behaviour
-The header `X-B3-ParentSpanId` only exists on the first call. 
+The header `parentSpanId` only exists on the first call. 
 
 ## Troubleshooting
 
