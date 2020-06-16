@@ -28,21 +28,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-starter-sleuth</artifactId>
-				<version>2.2.2.BUILD-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-starter-sleuth-core</artifactId>
-				<version>2.2.2.BUILD-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-sleuth-zipkin</artifactId>
-				<version>2.2.2.BUILD-SNAPSHOT</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
