@@ -24,7 +24,7 @@
 		<guava.version>25.1-jre</guava.version>
 		<bouncycastle.version>1.57</bouncycastle.version>
 		<wiremock.version>2.27.1</wiremock.version>
-		<gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
+		<gmavenplus-plugin.version>1.9.0</gmavenplus-plugin.version>
 		<logstash-logback-encoder.version>6.4</logstash-logback-encoder.version>
 	</properties>
 
