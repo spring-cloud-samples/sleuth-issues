@@ -25,7 +25,7 @@
 		<bouncycastle.version>1.57</bouncycastle.version>
 		<wiremock.version>2.27.1</wiremock.version>
 		<gmavenplus-plugin.version>1.7.1</gmavenplus-plugin.version>
-		<logstash-logback-encoder.version>5.0</logstash-logback-encoder.version>
+		<logstash-logback-encoder.version>6.4</logstash-logback-encoder.version>
 	</properties>
 
 	<dependencyManagement>
