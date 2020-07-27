@@ -22,7 +22,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<spock-spring.version>1.3-groovy-2.5</spock-spring.version>
 		<guava.version>25.1-jre</guava.version>
-		<bouncycastle.version>1.57</bouncycastle.version>
+		<bouncycastle.version>1.66</bouncycastle.version>
 		<wiremock.version>2.27.1</wiremock.version>
 		<gmavenplus-plugin.version>1.9.1</gmavenplus-plugin.version>
 		<logstash-logback-encoder.version>6.4</logstash-logback-encoder.version>
