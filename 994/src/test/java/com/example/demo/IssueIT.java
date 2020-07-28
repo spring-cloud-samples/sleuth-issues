@@ -1,24 +1,21 @@
 package com.example.demo;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import brave.Span;
 import brave.Tracer;
 import brave.sampler.Sampler;
-import org.assertj.core.api.BDDAssertions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,13 +23,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = IssueIT.Config.class)
 @ActiveProfiles("test")
 public class IssueIT {
@@ -48,7 +42,7 @@ public class IssueIT {
 	WebClient webclient2;
 	WebClient webclient3;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		this.webclient1 = this.webClientBuilder.baseUrl("http://localhost:" + this.port + "/foo").build();
 		this.webclient2 = this.webClientBuilder.baseUrl("http://localhost:" + this.port + "/bar").build();
