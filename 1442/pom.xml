@@ -4,10 +4,10 @@
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>0.0.1-BUILD-SNAPSHOT</version>
+		<version>2.3.3.RELEASE</version>
 	</parent>
 
-	<groupId>com.example.deadlock</groupId>
+	<groupId>com.example</groupId>
 	<artifactId>sleuth-issue-1442</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
