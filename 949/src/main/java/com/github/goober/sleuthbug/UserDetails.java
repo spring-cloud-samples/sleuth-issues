@@ -3,8 +3,8 @@ package com.github.goober.sleuthbug;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class UserDetails {
-    String id;
-    String name;
+	String id;
+	String name;
 
 	@JsonCreator
 	@java.beans.ConstructorProperties({"id", "name"})

@@ -22,8 +22,8 @@ public class Application implements InfoContributor {
 	@Override
 	public void contribute(final Info.Builder builder) {
 		builder
-			.withDetail("application-name", this.applicationName)
-			.withDetail("application-version", this.applicationVersion);
+				.withDetail("application-name", this.applicationName)
+				.withDetail("application-version", this.applicationVersion);
 	}
 
 	public static void main(final String[] args) {

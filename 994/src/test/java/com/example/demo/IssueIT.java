@@ -35,8 +35,10 @@ public class IssueIT {
 
 	@Value("${test.server.port:23456}")
 	int port;
-	@Autowired Tracer tracer;
-	@Autowired WebClient.Builder webClientBuilder;
+	@Autowired
+	Tracer tracer;
+	@Autowired
+	WebClient.Builder webClientBuilder;
 
 	WebClient webclient1;
 	WebClient webclient2;
@@ -58,22 +60,23 @@ public class IssueIT {
 			// when
 			Object res = this.webclient1.get().retrieve()
 					.bodyToMono(String.class).flatMap(foo -> {
-					log.info("[TEST_ME] received [" + foo + "]");
-					return this.webclient2.get().retrieve().bodyToMono(String.class).map( bar -> {
-						log.info("[TEST_ME] concatenating [" + foo + " " + bar);
-					return foo + " " + bar;
-				});
-			}).flatMap(fooBar -> {
-				log.info("[TEST_ME] received [" + fooBar + "]");
-				return this.webclient3.get().retrieve().bodyToMono(String.class).map(baz -> {
-					log.info("[TEST_ME] concatenating [" + fooBar +"] [" + baz + "]");
-					return fooBar + " " + baz;
-				});
-			}).block();
+						log.info("[TEST_ME] received [" + foo + "]");
+						return this.webclient2.get().retrieve().bodyToMono(String.class).map(bar -> {
+							log.info("[TEST_ME] concatenating [" + foo + " " + bar);
+							return foo + " " + bar;
+						});
+					}).flatMap(fooBar -> {
+						log.info("[TEST_ME] received [" + fooBar + "]");
+						return this.webclient3.get().retrieve().bodyToMono(String.class).map(baz -> {
+							log.info("[TEST_ME] concatenating [" + fooBar + "] [" + baz + "]");
+							return fooBar + " " + baz;
+						});
+					}).block();
 			log.info("[TEST_ME] Finished");
 
 			then(res).isEqualTo("foo bar baz");
-		} finally {
+		}
+		finally {
 			span.finish();
 		}
 
@@ -104,7 +107,8 @@ public class IssueIT {
 	@Configuration
 	@EnableAutoConfiguration
 	static class Config {
-		@Bean Sampler sampler() {
+		@Bean
+		Sampler sampler() {
 			return Sampler.ALWAYS_SAMPLE;
 		}
 	}

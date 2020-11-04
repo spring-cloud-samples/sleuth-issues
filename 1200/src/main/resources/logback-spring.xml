@@ -38,7 +38,7 @@
 					</stackTrace>
 				</providers>
 				<jsonFactoryDecorator
-					class="net.marcusolk.demo.jms.configuration.LogstashLogbackJsonFactoryDecorator"/>
+						class="net.marcusolk.demo.jms.configuration.LogstashLogbackJsonFactoryDecorator"/>
 			</encoder>
 		</appender>
 

@@ -1,6 +1,7 @@
 package net.marcusolk.demo.jms.hello;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -17,28 +18,28 @@ public class HelloProxy {
 	public static final String X_CALLER_REF = "x-caller-ref";
 
 	private final String helloServiceUrl;
-    private final RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
 
-    public HelloProxy(
+	public HelloProxy(
 			final RestTemplateBuilder restTemplateBuilder,
 			final @Value("${service.hello.url}") String helloServiceUrl) {
-        this.restTemplate = restTemplateBuilder.build();
-        this.helloServiceUrl = helloServiceUrl;
-    }
+		this.restTemplate = restTemplateBuilder.build();
+		this.helloServiceUrl = helloServiceUrl;
+	}
 
-    public String sendHello(final String name) {
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.TEXT_PLAIN);
+	public String sendHello(final String name) {
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.TEXT_PLAIN);
 		headers.set(X_CALLER_REF, "jms-queue-listener");
-        final HttpEntity<String> entity = new HttpEntity<>(name, headers);
+		final HttpEntity<String> entity = new HttpEntity<>(name, headers);
 
-        try {
-        	log.info("Sending hello request.");
+		try {
+			log.info("Sending hello request.");
 
-            return this.restTemplate.exchange(this.helloServiceUrl, HttpMethod.POST, entity, String.class).getBody();
-        }
+			return this.restTemplate.exchange(this.helloServiceUrl, HttpMethod.POST, entity, String.class).getBody();
+		}
 		catch (final Exception e) {
-            throw new RuntimeException("Hello reuest failed.", e);
-        }
-    }
+			throw new RuntimeException("Hello reuest failed.", e);
+		}
+	}
 }

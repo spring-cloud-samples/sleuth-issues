@@ -25,9 +25,12 @@ import org.springframework.web.client.RestTemplate;
 @ActiveProfiles("test")
 public class IssueIT {
 
-	@Value("${test.server.port:7655}") int port;
-	@Autowired RestTemplate restTemplate;
-	@Autowired Tracer tracer;
+	@Value("${test.server.port:7655}")
+	int port;
+	@Autowired
+	RestTemplate restTemplate;
+	@Autowired
+	Tracer tracer;
 
 	@Test
 	public void should_propagate_trace_id() throws IOException, InterruptedException {
@@ -37,7 +40,8 @@ public class IssueIT {
 			//when
 			this.restTemplate
 					.getForObject("http://localhost:" + this.port + "/users", String.class);
-		} finally {
+		}
+		finally {
 			span.finish();
 		}
 
@@ -49,7 +53,7 @@ public class IssueIT {
 		System.out.println("Found the following call ids " + callIds);
 		List<String> parentSpanIds = Arrays.stream(text.split("\n"))
 				.filter(s -> callIds.stream()
-					.anyMatch(callId -> s.contains("," + callId)))
+						.anyMatch(callId -> s.contains("," + callId)))
 				.map(s -> s.split(",")[1].trim())
 				.collect(Collectors.toList());
 		System.out.println("Found the following parent span ids " + parentSpanIds);

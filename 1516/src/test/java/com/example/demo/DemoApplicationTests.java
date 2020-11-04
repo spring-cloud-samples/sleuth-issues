@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
+import brave.handler.MutableSpan;
 import org.assertj.core.api.BDDAssertions;
 import org.assertj.core.api.ListAssert;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
-
-import brave.handler.MutableSpan;
 
 @SpringBootTest
 class DemoApplicationTests {
@@ -53,7 +52,8 @@ class DemoApplicationTests {
 	}
 
 	private ListAssert<String> thenAllPostWebClientSpansAreEqualToFirstSpanInTheController(ConfigurableApplicationContext service1, String firstSpanIdInController) {
-		return BDDAssertions.then(postWebClientSpans(service1).stream().map(span -> span.context().spanIdString()).distinct().collect(Collectors.toList())).containsExactly(firstSpanIdInController);
+		return BDDAssertions.then(postWebClientSpans(service1).stream().map(span -> span.context().spanIdString()).distinct().collect(Collectors.toList()))
+				.containsExactly(firstSpanIdInController);
 	}
 
 	private List<MutableSpan> allReportedSpans(ConfigurableApplicationContext service2, ConfigurableApplicationContext service1) {

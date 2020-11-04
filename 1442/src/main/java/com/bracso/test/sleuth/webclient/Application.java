@@ -12,16 +12,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 @SpringBootApplication
 public class Application {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-    
-    @Bean
-    public WebClient webClient() {
-        return WebClient.create();
-    }
-    
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+
+	@Bean
+	public WebClient webClient() {
+		return WebClient.create();
+	}
+
 }

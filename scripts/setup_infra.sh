@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export IP="$( ./scripts/whats_my_ip.sh )"
+export IP="$(./scripts/whats_my_ip.sh)"
 
 echo "Building docker"
 pushd docker

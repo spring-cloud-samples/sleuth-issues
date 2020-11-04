@@ -10,17 +10,17 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class UserClient {
 
 	@Autowired
-    private WebClient webClient;
+	private WebClient webClient;
 
-    Mono<BriefUserResponse> findUsers() {
-        return this.webClient.get()
-                .uri("/external").retrieve()
-                .bodyToMono(BriefUserResponse.class);
-    }
+	Mono<BriefUserResponse> findUsers() {
+		return this.webClient.get()
+				.uri("/external").retrieve()
+				.bodyToMono(BriefUserResponse.class);
+	}
 
-    Mono<UserDetails> getUserDetails(String id) {
-        return this.webClient.get().uri("/external/{id}", id)
-                .retrieve()
-                .bodyToMono(UserDetails.class);
-    }
+	Mono<UserDetails> getUserDetails(String id) {
+		return this.webClient.get().uri("/external/{id}", id)
+				.retrieve()
+				.bodyToMono(UserDetails.class);
+	}
 }

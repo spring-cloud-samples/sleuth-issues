@@ -1,6 +1,7 @@
 package net.marcusolk.demo.jms.configuration;
 
 import brave.sampler.Sampler;
+
 import org.springframework.stereotype.Component;
 
 @Component

@@ -25,9 +25,12 @@ import org.springframework.web.client.RestTemplate;
 @ActiveProfiles("test")
 public class IssueIT {
 
-	@Value("${test.server.port:7654}") int port;
-	@Autowired RestTemplate restTemplate;
-	@Autowired Tracer tracer;
+	@Value("${test.server.port:7654}")
+	int port;
+	@Autowired
+	RestTemplate restTemplate;
+	@Autowired
+	Tracer tracer;
 
 	@Test
 	public void should_propagate_trace_id() throws IOException {
@@ -40,7 +43,8 @@ public class IssueIT {
 					.getForObject("http://localhost:" + this.port + "/kafka/template", String.class);
 			this.restTemplate
 					.getForObject("http://localhost:" + this.port + "/kafka/reactor", String.class);
-		} finally {
+		}
+		finally {
 			span.finish();
 		}
 

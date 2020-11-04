@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserResponse {
-    List<UserDetails> users;
+	List<UserDetails> users;
 
 	@ConstructorProperties({"users"})
 	UserResponse(List<UserDetails> users) {

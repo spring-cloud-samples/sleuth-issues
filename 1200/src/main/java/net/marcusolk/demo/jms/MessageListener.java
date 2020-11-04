@@ -1,14 +1,15 @@
 package net.marcusolk.demo.jms;
 
+import javax.jms.JMSException;
+import javax.jms.TextMessage;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.marcusolk.demo.jms.hello.HelloProxy;
+
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
-
-import javax.jms.JMSException;
-import javax.jms.TextMessage;
 
 @Slf4j
 @Component

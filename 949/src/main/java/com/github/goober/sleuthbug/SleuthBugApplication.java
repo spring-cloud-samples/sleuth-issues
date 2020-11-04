@@ -24,7 +24,7 @@ public class SleuthBugApplication {
 		return this.userService.findUsers()
 				.flatMap(user -> this.userService.getUserDetails(user.getId()))
 				.reduce(UserResponse.builder(), (b, details) ->
-					b.user(details)
+						b.user(details)
 				)
 				.map(UserResponse.UserResponseBuilder::build);
 	}
@@ -36,7 +36,8 @@ public class SleuthBugApplication {
 	@Configuration
 	public static class WebClientConfig {
 
-		@Value("${server.port:7655}") int port;
+		@Value("${server.port:7655}")
+		int port;
 
 		@Bean
 		public WebClient webClient(WebClient.Builder webClientBuilder) {

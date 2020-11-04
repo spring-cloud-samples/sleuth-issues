@@ -1,7 +1,7 @@
 package com.github.goober.sleuthbug;
 
 public class User {
-    String id;
+	String id;
 
 	@java.beans.ConstructorProperties({"id"})
 	User(String id) {
