@@ -7,7 +7,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>spring-cloud-sleuth-issues</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.1-BUILD-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 
 	<name>Spring Cloud Sleuth Issues</name>
 	<description>Spring Cloud Sleuth Issues</description>

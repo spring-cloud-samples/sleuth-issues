@@ -11,7 +11,7 @@
 
 	<groupId>com.example</groupId>
 	<artifactId>sleuth-issue-1442</artifactId>
-	<version>0.0.1-BUILD-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
