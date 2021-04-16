@@ -1,18 +1,19 @@
 package com.example.demodecoratequeues;
 
+import java.time.Duration;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.Disposable;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.Disposable;
-import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Schedulers;
-
-import java.time.Duration;
 
 @SpringBootApplication
 public class Issue1900Application {
@@ -43,6 +44,7 @@ public class Issue1900Application {
 
 	public interface Service {
 		Flux<String> invoke();
+
 		Flux<String> invokeRemote();
 	}
 
