@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Sleuth Issue 866</name>
+	<name>sleuth-issue-866</name>
 	<description>Demo project for Spring Boot</description>
 	<url>https://github.com/spring-cloud/spring-cloud-sleuth/issues/866</url>
 
@@ -24,6 +24,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2020.0.3-SNAPSHOT</spring-cloud.version>
+		<testcontainers.version>1.15.2</testcontainers.version>
 	</properties>
 
 	<dependencies>
@@ -46,7 +47,18 @@
 		<dependency>
 			<groupId>io.projectreactor.kafka</groupId>
 			<artifactId>reactor-kafka</artifactId>
-			<version>1.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>kafka</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -59,66 +71,8 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>reserve-tomcat-port</id>
-						<goals>
-							<goal>reserve-network-port</goal>
-						</goals>
-						<phase>process-resources</phase>
-						<configuration>
-							<portNames>
-								<portName>tomcat.http.port</portName>
-							</portNames>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>pre-integration-test</id>
-						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<workingDirectory>${project.build.directory}</workingDirectory>
-							<arguments>
-								<argument>--server.port=${tomcat.http.port}</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>post-integration-test</id>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<configuration>
-					<includes>
-						<include>**/*IT.java</include>
-					</includes>
-					<systemPropertyVariables>
-						<test.server.port>${tomcat.http.port}</test.server.port>
-					</systemPropertyVariables>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

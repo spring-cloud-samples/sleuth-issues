@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>1816</artifactId>
+    <artifactId>sleuth-issue-1816</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sleuth-issue-1816</name>
     <description>Test openfeign with resilience4j</description>

@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Sleuth Issue 994</name>
+	<name>sleuth-issue-994</name>
 	<description>Demo project for Spring Boot</description>
 	<url>https://github.com/spring-cloud/spring-cloud-sleuth/issues/994</url>
 

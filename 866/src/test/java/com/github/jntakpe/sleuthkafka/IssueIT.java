@@ -11,29 +11,46 @@ import brave.Span;
 import brave.Tracer;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testcontainers.containers.KafkaContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootTest(classes = IssueIT.Config.class)
-@ActiveProfiles("test")
+@SpringBootTest(classes = {SleuthKafkaApplication.class, IssueIT.Config.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Testcontainers
+@ExtendWith(OutputCaptureExtension.class)
 public class IssueIT {
 
-	@Value("${test.server.port:7654}")
+	@LocalServerPort
 	int port;
 	@Autowired
 	RestTemplate restTemplate;
 	@Autowired
 	Tracer tracer;
 
+	@Container
+	static KafkaContainer kafka = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka"));
+
+	@DynamicPropertySource
+	static void kafkaProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.kafka.bootstrap-servers", kafka::getBootstrapServers);
+	}
+
 	@Test
-	public void should_propagate_trace_id() throws IOException {
+	public void should_propagate_trace_id(CapturedOutput capturedOutput) throws IOException {
 		//given
 		Span span = this.tracer.nextSpan().name("foo").start();
 		String traceIdString = span.context().traceIdString();
@@ -49,7 +66,7 @@ public class IssueIT {
 		}
 
 		//then
-		String text = new String(Files.readAllBytes(new File("target/log/spring.log").toPath()));
+		String text = capturedOutput.getAll();
 		List<String> traceIds = Arrays.stream(text.split("\n"))
 				.filter(s -> s.contains("[TEST]")).map(s -> s.split(",")[1]).distinct()
 				.collect(Collectors.toList());
@@ -59,7 +76,6 @@ public class IssueIT {
 	}
 
 	@Configuration
-	@EnableAutoConfiguration
 	static class Config {
 		@Bean
 		RestTemplate restTemplate() {
