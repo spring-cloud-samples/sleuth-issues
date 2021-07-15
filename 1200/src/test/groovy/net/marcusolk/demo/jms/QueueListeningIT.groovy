@@ -28,7 +28,7 @@ class QueueListeningIT extends ApiTestBase {
 			def someMessage = 'Arthur'
 
 		and:
-			wireMock.stubFor(
+			wireMockServer.stubFor(
 					post(urlEqualTo('/'))
 							.willReturn(aResponse().withStatus(HttpStatus.SC_OK)))
 
@@ -45,7 +45,7 @@ class QueueListeningIT extends ApiTestBase {
 			}
 
 		and: 'the request has been sent'
-			wireMock.verify(1, postRequestedFor(urlEqualTo('/')).withRequestBody(equalTo(someMessage)))
+			wireMockServer.verify(1, postRequestedFor(urlEqualTo('/')).withRequestBody(equalTo(someMessage)))
 	}
 
 }
