@@ -25,8 +25,8 @@ import org.springframework.web.client.RestTemplate;
 @ActiveProfiles("test")
 public class IssueIT {
 
-//	@Value("${test.server.port:7655}")
-	int port = 7655;
+	@Value("${test.server.port:7655}")
+	int port;
 	@Autowired
 	RestTemplate restTemplate;
 	@Autowired
