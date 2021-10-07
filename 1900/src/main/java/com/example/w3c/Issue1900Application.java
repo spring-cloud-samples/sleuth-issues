@@ -1,4 +1,4 @@
-package com.example.demodecoratequeues;
+package com.example.w3c;
 
 import java.time.Duration;
 

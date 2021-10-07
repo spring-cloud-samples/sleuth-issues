@@ -1,4 +1,4 @@
-package com.example.demodecoratequeues;
+package com.example.w3c;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
