@@ -1,10 +1,10 @@
 package net.marcusolk.demo.jms
 
+import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.common.Slf4jNotifier
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule
-import org.junit.ClassRule
-import org.junit.Rule
+import spock.lang.Shared
 import spock.lang.Specification
 
 import org.springframework.boot.test.context.SpringBootTest
@@ -16,17 +16,18 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 abstract class ApiTestBase extends Specification {
 
-	@ClassRule
-	static wireMockRule = new WireMockClassRule(WireMockConfiguration.options()
-																	 .dynamicPort()
-																	 .notifier(new Slf4jNotifier(true)))
-
-	@Rule
-	WireMockClassRule wireMock = wireMockRule
+	@Shared WireMockServer wireMockServer;
 
 	def setupSpec() {
-		wireMockRule.start()
-		System.properties.'wiremock.server.port' = wireMockRule.port()
+		this.wireMockServer = new WireMockServer(WireMockConfiguration.options()
+				.dynamicPort()
+				.notifier(new Slf4jNotifier(true)))
+		this.wireMockServer.start()
+		System.properties.'wiremock.server.port' = wireMockServer.port()
+	}
+
+	def cleanupSpec() {
+		this.wireMockServer.shutdown()
 	}
 
 }
