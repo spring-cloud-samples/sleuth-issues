@@ -18,7 +18,7 @@
 	<packaging>jar</packaging>
 
 	<properties>
-		<spring-cloud.version>2021.0.2-SNAPSHOT</spring-cloud.version>
+		<spring-cloud.version>2021.0.2.SNAPSHOT</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<spock-spring.version>2.1-groovy-3.0</spock-spring.version>
