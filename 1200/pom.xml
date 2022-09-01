@@ -21,7 +21,7 @@
 		<spring-cloud.version>2021.0.4-SNAPSHOT</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<spock-spring.version>2.1-groovy-3.0</spock-spring.version>
+		<spock-spring.version>2.2-groovy-4.0</spock-spring.version>
 		<guava.version>25.1-jre</guava.version>
 		<bouncycastle.version>1.70</bouncycastle.version>
 		<wiremock.version>2.27.2</wiremock.version>
