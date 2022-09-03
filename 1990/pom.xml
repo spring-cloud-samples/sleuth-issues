@@ -15,7 +15,7 @@
 	<description>Spring Vault with reactive web app</description>
 	<properties>
 		<java.version>8</java.version>
-		<spring-cloud.version>2021.0.3-SNAPSHOT</spring-cloud.version>
+		<spring-cloud.version>2021.0.5-SNAPSHOT</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
